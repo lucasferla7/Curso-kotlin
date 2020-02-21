@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.financask.R
 import br.com.alura.financask.model.Tipo
 import br.com.alura.financask.model.Transacao
+import br.com.alura.financask.ui.ResumoView
 import br.com.alura.financask.ui.adapter.ListaTransacoesAdapter
 import kotlinx.android.synthetic.main.activity_lista_transacoes.*
 import java.math.BigDecimal
@@ -15,7 +16,17 @@ class ListaTransacoesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_lista_transacoes)
-        ConfiguraLista(TransacoesDeExemplo())
+        val transacoes = TransacoesDeExemplo()
+
+        ConfiguraResumo(transacoes)
+
+        ConfiguraLista(transacoes)
+    }
+
+    private fun ConfiguraResumo(transacoes: List<Transacao>) {
+        ResumoView(window.decorView, transacoes).AdicionaReceita()
+        ResumoView(window.decorView, transacoes).AdicionaDespesa()
+        ResumoView(window.decorView, transacoes).AdicionaTotal()
     }
 
     private fun ConfiguraLista(transacoes: List<Transacao>) {
@@ -29,6 +40,9 @@ class ListaTransacoesActivity : AppCompatActivity() {
                 valor = BigDecimal(40.00),
                 tipo = Tipo.DESPESA
             ),
+            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance()),
+            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance()),
+            Transacao(BigDecimal(333.00), "Roupas", Tipo.DESPESA, Calendar.getInstance()),
             Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance())
         )
     }
