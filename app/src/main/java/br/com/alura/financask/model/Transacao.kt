@@ -7,14 +7,4 @@ class Transacao(
     val valor: BigDecimal,
     val categoria: String,
     val tipo: Tipo,
-    val data: Calendar = Calendar.getInstance()
-) {
-
-    constructor(valor: BigDecimal, tipo: Tipo) : this(valor, "indefinida", tipo)
-    constructor(valor: BigDecimal, tipo: Tipo, data: Calendar) : this(
-        valor,
-        "indefinida",
-        tipo,
-        data
-    )
-}
+    val data: Calendar = Calendar.getInstance())

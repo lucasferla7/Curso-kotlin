@@ -13,14 +13,23 @@ import java.util.*
 class ListaTransacoesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_transacoes)
 
-        val transacoes = listOf(
-            Transacao(categoria = "Almoço de final de semana", valor = BigDecimal(40.00), tipo = Tipo.DESPESA),
+        setContentView(R.layout.activity_lista_transacoes)
+        ConfiguraLista(TransacoesDeExemplo())
+    }
+
+    private fun ConfiguraLista(transacoes: List<Transacao>) {
+        lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
+    }
+
+    private fun TransacoesDeExemplo(): List<Transacao> {
+        return listOf(
+            Transacao(
+                categoria = "Almoço de final de semana",
+                valor = BigDecimal(40.00),
+                tipo = Tipo.DESPESA
+            ),
             Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance())
         )
-
-        lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
-
     }
 }

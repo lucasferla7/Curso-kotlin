@@ -13,9 +13,11 @@ import br.com.alura.financask.model.Tipo
 import br.com.alura.financask.model.Transacao
 import kotlinx.android.synthetic.main.transacao_item.view.*
 
-class ListaTransacoesAdapter(transacoes: List<Transacao>, context: Context) : BaseAdapter() {
-    private val transacoes = transacoes
-    private val context = context
+class ListaTransacoesAdapter(
+    private val transacoes: List<Transacao>,
+    private val context: Context
+) : BaseAdapter() {
+
     private val limiteDaCategoria = 14
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -24,29 +26,54 @@ class ListaTransacoesAdapter(transacoes: List<Transacao>, context: Context) : Ba
 
         val transacao = transacoes[position]
 
-        if (transacao.tipo == Tipo.RECEITA) {
-            viewCriada.transacao_valor.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.receita
-                )
-            )
-            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_receita)
-        } else if (transacao.tipo == Tipo.DESPESA) {
-            viewCriada.transacao_valor.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.despesa
-                )
-            )
-            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_despesa)
-        }
-
-        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
-        viewCriada.transacao_categoria.text = transacao.categoria.limitaEmAte(limiteDaCategoria)
-        viewCriada.transacao_data.text = transacao.data.formataParaBrasileiro()
+        AdicionaValor(transacao, viewCriada)
+        AdicionaIcone(transacao, viewCriada)
+        AdicionaCategoria(viewCriada, transacao)
+        AdicionaData(viewCriada, transacao)
 
         return viewCriada
+    }
+
+    private fun AdicionaData(
+        viewCriada: View,
+        transacao: Transacao
+    ) {
+        viewCriada.transacao_data.text = transacao.data.formataParaBrasileiro()
+    }
+
+    private fun AdicionaCategoria(
+        viewCriada: View,
+        transacao: Transacao
+    ) {
+        viewCriada.transacao_categoria.text = transacao.categoria.limitaEmAte(limiteDaCategoria)
+    }
+
+    private fun AdicionaIcone(
+        transacao: Transacao,
+        viewCriada: View
+    ) {
+        viewCriada.transacao_icone.setBackgroundResource(IconePor(transacao, viewCriada))
+    }
+
+    private fun IconePor(transacao: Transacao, viewCriada: View): Int {
+        if (transacao.tipo == Tipo.RECEITA)
+            return R.drawable.icone_transacao_item_receita
+
+        return R.drawable.icone_transacao_item_despesa
+    }
+
+    private fun AdicionaValor(transacao: Transacao, viewCriada: View) {
+        var cor = CorPor(transacao)
+
+        viewCriada.transacao_valor.setTextColor(cor)
+        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
+    }
+
+    private fun CorPor(transacao: Transacao): Int {
+        if (transacao.tipo == Tipo.RECEITA)
+            return ContextCompat.getColor(context, R.color.receita)
+
+        return ContextCompat.getColor(context, R.color.despesa)
     }
 
     override fun getItem(position: Int): Transacao {
