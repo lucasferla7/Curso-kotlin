@@ -11,16 +11,16 @@ import java.math.BigDecimal
 import java.util.*
 
 class ListaTransacoesActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle? ) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_transacoes)
 
         val transacoes = listOf(
-                            Transacao(BigDecimal(40.00), "Jantar", Tipo.DESPESA),
-                            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance())
-                        )
+            Transacao(valor = BigDecimal(40.00), tipo = Tipo.DESPESA),
+            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance())
+        )
 
-        lista_transacoes_listview.setAdapter(ListaTransacoesAdapter(transacoes, this))
+        lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
 
     }
 }
