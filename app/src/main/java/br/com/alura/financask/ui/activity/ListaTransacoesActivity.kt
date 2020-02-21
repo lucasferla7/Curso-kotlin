@@ -24,9 +24,8 @@ class ListaTransacoesActivity : AppCompatActivity() {
     }
 
     private fun ConfiguraResumo(transacoes: List<Transacao>) {
-        ResumoView(window.decorView, transacoes).AdicionaReceita()
-        ResumoView(window.decorView, transacoes).AdicionaDespesa()
-        ResumoView(window.decorView, transacoes).AdicionaTotal()
+        val resumoView = ResumoView(window.decorView, this, transacoes)
+        resumoView.Atualiza()
     }
 
     private fun ConfiguraLista(transacoes: List<Transacao>) {
@@ -37,13 +36,13 @@ class ListaTransacoesActivity : AppCompatActivity() {
         return listOf(
             Transacao(
                 categoria = "Almoço de final de semana",
-                valor = BigDecimal(40.00),
+                valor = BigDecimal(1.00),
                 tipo = Tipo.DESPESA
             ),
-            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance()),
-            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance()),
-            Transacao(BigDecimal(333.00), "Roupas", Tipo.DESPESA, Calendar.getInstance()),
-            Transacao(BigDecimal(333.00), "Roupas", Tipo.RECEITA, Calendar.getInstance())
+            Transacao(BigDecimal(1.00), "Roupas", Tipo.RECEITA, Calendar.getInstance()),
+            Transacao(BigDecimal(1.00), "Roupas", Tipo.RECEITA, Calendar.getInstance()),
+            Transacao(BigDecimal(4.00), "Roupas", Tipo.DESPESA, Calendar.getInstance()),
+            Transacao(BigDecimal(1.00), "Roupas", Tipo.RECEITA, Calendar.getInstance())
         )
     }
 }
